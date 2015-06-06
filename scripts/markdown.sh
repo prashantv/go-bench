@@ -9,3 +9,7 @@ echo "Benchmark Name|Iterations|Per-Iteration"
 echo "----|----|----"
 grep Benchmark \
   | tr '\t' '|'
+
+GOVERSION=$(go version)
+echo
+echo "Generated using $GOVERSION"

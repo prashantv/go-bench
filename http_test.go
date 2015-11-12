@@ -12,7 +12,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-func setupServer(t testing.TB) string {
+func setupServer(t testing.TB, handlerFunc func()) string {
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		t.Fatalf("net.Listen failed: %v", err)
@@ -20,6 +20,7 @@ func setupServer(t testing.TB) string {
 
 	helloWorldBytes := []byte("Hello world")
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handlerFunc()
 		w.Write(helloWorldBytes)
 
 	})
@@ -42,7 +43,7 @@ func doGet(t testing.TB, client *http.Client, url string) {
 
 func BenchmarkHTTPCall(b *testing.B) {
 	client := &http.Client{}
-	url := setupServer(b)
+	url := setupServer(b, func() {})
 	// Create a connection that will be reused.
 	doGet(b, client, url)
 
@@ -54,7 +55,10 @@ func BenchmarkHTTPCall(b *testing.B) {
 
 func BenchmarkHTTPCallWithCtx(b *testing.B) {
 	client := &http.Client{}
-	url := setupServer(b)
+	url := setupServer(b, func() {
+		_, cancel := context.WithTimeout(context.Background(), time.Second)
+		cancel()
+	})
 	// Create a connection that will be reused.
 	doGet(b, client, url)
 

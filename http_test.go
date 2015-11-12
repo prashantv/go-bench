@@ -7,6 +7,9 @@ import (
 	"net"
 	"net/http"
 	"testing"
+	"time"
+
+	"golang.org/x/net/context"
 )
 
 func setupServer(t testing.TB) string {
@@ -47,4 +50,19 @@ func BenchmarkHTTPCall(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		doGet(b, client, url)
 	}
+}
+
+func BenchmarkHTTPCallWithCtx(b *testing.B) {
+	client := &http.Client{}
+	url := setupServer(b)
+	// Create a connection that will be reused.
+	doGet(b, client, url)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, cancel := context.WithTimeout(context.Background(), time.Second)
+		doGet(b, client, url)
+		cancel()
+	}
+
 }

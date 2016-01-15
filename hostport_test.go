@@ -15,11 +15,22 @@ func getHostStd(hostPort string) string {
 	return hostPort
 }
 
-// getHostLoop uses a for loop to find the location of the colon and
+// getHostIndexLoop uses a for loop to find the location of the colon and
 // returns the string up to that point.
-func getHostLoop(hostPort string) string {
+func getHostIndexLoop(hostPort string) string {
 	for i := 0; i < len(hostPort); i++ {
 		if hostPort[i] == ':' {
+			return hostPort[:i]
+		}
+	}
+	return hostPort
+}
+
+// getHostRangeLoop uses a for loop to find the location of the colon and
+// returns the string up to that point.
+func getHostRangeLoop(hostPort string) string {
+	for i, c := range hostPort {
+		if c == ':' {
 			return hostPort[:i]
 		}
 	}
@@ -34,10 +45,18 @@ func BenchmarkGetHostStd(b *testing.B) {
 	fmt.Println(host)
 }
 
-func BenchmarkGetHostLoop(b *testing.B) {
+func BenchmarkGetHostIndexLoop(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostLoop("127.0.0.1:2134")
+		host = getHostIndexLoop("127.0.0.1:2134")
+	}
+	fmt.Println(host)
+}
+
+func BenchmarkGetHostRangeLoop(b *testing.B) {
+	var host string
+	for i := 0; i < b.N; i++ {
+		host = getHostRangeLoop("127.0.0.1:2134")
 	}
 	fmt.Println(host)
 }

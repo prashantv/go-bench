@@ -6,6 +6,8 @@ import (
 	"testing"
 )
 
+const printHost = false
+
 // getHostStd uses strings.IndexByte to find the location of the colon
 // and returns the string up to that point.
 func getHostStd(hostPort string) string {
@@ -42,7 +44,9 @@ func BenchmarkGetHostStd(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		host = getHostStd("127.0.0.1:2134")
 	}
-	fmt.Println(host)
+	if printHost {
+		fmt.Println(host)
+	}
 }
 
 func BenchmarkGetHostIndexLoop(b *testing.B) {
@@ -50,7 +54,9 @@ func BenchmarkGetHostIndexLoop(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		host = getHostIndexLoop("127.0.0.1:2134")
 	}
-	fmt.Println(host)
+	if printHost {
+		fmt.Println(host)
+	}
 }
 
 func BenchmarkGetHostRangeLoop(b *testing.B) {
@@ -58,5 +64,7 @@ func BenchmarkGetHostRangeLoop(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		host = getHostRangeLoop("127.0.0.1:2134")
 	}
-	fmt.Println(host)
+	if printHost {
+		fmt.Println(host)
+	}
 }

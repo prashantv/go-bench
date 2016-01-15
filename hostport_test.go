@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net"
 	"strings"
 	"testing"
 )
@@ -10,9 +11,16 @@ const printHost = false
 
 // getHostStd uses strings.IndexByte to find the location of the colon
 // and returns the string up to that point.
-func getHostStd(hostPort string) string {
+func getHostIndexByte(hostPort string) string {
 	if idx := strings.IndexByte(hostPort, ':'); idx > 0 {
 		return hostPort[:idx]
+	}
+	return hostPort
+}
+
+func getHostSplitHostPort(hostPort string) string {
+	if host, _, err := net.SplitHostPort(hostPort); err == nil {
+		return host
 	}
 	return hostPort
 }
@@ -39,10 +47,20 @@ func getHostRangeLoop(hostPort string) string {
 	return hostPort
 }
 
-func BenchmarkGetHostStd(b *testing.B) {
+func BenchmarkGetHostIndexByte(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostStd("127.0.0.1:2134")
+		host = getHostIndexByte("127.0.0.1:2134")
+	}
+	if printHost {
+		fmt.Println(host)
+	}
+}
+
+func BenchmarkGetHostSplitHostPort(b *testing.B) {
+	var host string
+	for i := 0; i < b.N; i++ {
+		host = getHostSplitHostPort("127.0.0.1:2134")
 	}
 	if printHost {
 		fmt.Println(host)

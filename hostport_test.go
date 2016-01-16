@@ -7,6 +7,9 @@ import (
 	"testing"
 )
 
+// var testHostPort = "127.0.0.1:1234"
+var testHostPort = "127.127.127.127:1234"
+
 const printHost = false
 
 // getHostStd uses strings.IndexByte to find the location of the colon
@@ -50,7 +53,7 @@ func getHostRangeLoop(hostPort string) string {
 func BenchmarkGetHostIndexByte(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostIndexByte("127.0.0.1:2134")
+		host = getHostIndexByte(testHostPort)
 	}
 	if printHost {
 		fmt.Println(host)
@@ -60,7 +63,7 @@ func BenchmarkGetHostIndexByte(b *testing.B) {
 func BenchmarkGetHostSplitHostPort(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostSplitHostPort("127.0.0.1:2134")
+		host = getHostSplitHostPort(testHostPort)
 	}
 	if printHost {
 		fmt.Println(host)
@@ -70,7 +73,7 @@ func BenchmarkGetHostSplitHostPort(b *testing.B) {
 func BenchmarkGetHostIndexLoop(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostIndexLoop("127.0.0.1:2134")
+		host = getHostIndexLoop(testHostPort)
 	}
 	if printHost {
 		fmt.Println(host)
@@ -80,7 +83,7 @@ func BenchmarkGetHostIndexLoop(b *testing.B) {
 func BenchmarkGetHostRangeLoop(b *testing.B) {
 	var host string
 	for i := 0; i < b.N; i++ {
-		host = getHostRangeLoop("127.0.0.1:2134")
+		host = getHostRangeLoop(testHostPort)
 	}
 	if printHost {
 		fmt.Println(host)

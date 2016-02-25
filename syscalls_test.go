@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"strings"
 	"testing"
 	"time"
 )
@@ -10,6 +11,16 @@ import (
 func BenchmarkTimeNow(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		time.Now()
+	}
+}
+
+func BenchmarkFunction(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		strings.HasPrefix("a", "asd")
+		strings.HasPrefix("a", "asd")
+		strings.HasPrefix("a", "asd")
+		strings.HasPrefix("a", "asd")
+		strings.HasPrefix("a", "asd")
 	}
 }
 

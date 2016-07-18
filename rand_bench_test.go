@@ -103,3 +103,13 @@ func (timeRand) Intn(n int) int {
 func BenchmarkTimeNowRand(b *testing.B) {
 	benchmarkRand(b, timeRand{})
 }
+
+// Get processor-local counter?
+// Atomic operations for processors (faster!)
+// Fast rand would
+
+// TODO:
+// what if there was a processor-local atomic?
+// basically, you get returned the processor ID.
+// and you can manage the array safely.
+// maybe it should always increment and return?

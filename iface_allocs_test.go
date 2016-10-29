@@ -8,7 +8,7 @@ type emptyStruct struct{}
 
 type nonemptyStruct struct{ Name string }
 
-func BenchmarkIFaceAllocs(b *testing.B) {
+func BenchmarkEmptyStructInterface(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ifaceLast = emptyStruct{}
 	}

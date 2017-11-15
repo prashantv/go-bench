@@ -78,3 +78,23 @@ func BenchmarkReadWriteLockRead90(b *testing.B) {
 		mu.Unlock()
 	})
 }
+
+func BenchmarkAtomicCompareCAS(b *testing.B) {
+	var atom int32
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			atomic.CompareAndSwapInt32(&atom, 1, 2)
+		}
+	})
+}
+
+func BenchmarkAtomicCompareReadWrite(b *testing.B) {
+	var atom int32
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			if atomic.LoadInt32(&atom) == 1 {
+				atomic.CompareAndSwapInt32(&atom, 1, 2)
+			}
+		}
+	})
+}

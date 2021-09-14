@@ -40,7 +40,7 @@ func (t *timePeriod) Take() {
 	// a service that slowed down a lot for a short period of time would get
 	// a much higher RPS following that.
 	if t.sleepFor < -time.Second {
-		t.sleepFor = time.Second
+		t.sleepFor = -time.Second
 	}
 
 	// If sleepFor is positive, then we should sleep now.

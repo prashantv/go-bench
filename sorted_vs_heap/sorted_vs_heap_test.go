@@ -31,31 +31,35 @@ func (ss *sortedSlice) PopV() int {
 	return v
 }
 
-type heapSlice []int
+type heapSlice struct {
+	values []int
+	arg    int
+}
 
 func newHeapSlice() *heapSlice         { return &heapSlice{} }
-func (h heapSlice) Len() int           { return len(h) }
-func (h heapSlice) Less(i, j int) bool { return h[i] < h[j] }
-func (h heapSlice) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h heapSlice) Len() int           { return len(h.values) }
+func (h heapSlice) Less(i, j int) bool { return h.values[i] < h.values[j] }
+func (h heapSlice) Swap(i, j int)      { h.values[i], h.values[j] = h.values[j], h.values[i] }
 
 func (h *heapSlice) Push(v any) {
-	*h = append(*h, v.(int))
+	h.values = append(h.values, h.arg)
 }
 
 func (h *heapSlice) Pop() any {
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[0 : n-1]
-	return x
+	n := len(h.values)
+	h.arg = h.values[n-1]
+	h.values = h.values[0 : n-1]
+	return 0
 }
 
 func (h *heapSlice) PushV(v int) {
-	heap.Push(h, v)
+	h.arg = v
+	heap.Push(h, 0)
 }
 
 func (h *heapSlice) PopV() int {
-	return heap.Pop(h).(int)
+	heap.Pop(h)
+	return h.arg
 }
 
 type Stack interface {

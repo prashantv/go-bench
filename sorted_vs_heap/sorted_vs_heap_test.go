@@ -18,6 +18,9 @@ func (ss sortedSlice) Less(i, j int) bool { return ss[i] < ss[j] }
 func (ss sortedSlice) Swap(i, j int)      { ss[i], ss[j] = ss[j], ss[i] }
 
 func (ss *sortedSlice) PushV(v int) {
+	if cap(*ss) == 0 {
+		*ss = make(sortedSlice, 0, 10)
+	}
 	*ss = append(*ss, v)
 	sort.Sort(ss)
 }

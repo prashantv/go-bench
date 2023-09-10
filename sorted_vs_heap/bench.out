@@ -1,0 +1,22 @@
+goos: linux
+goarch: amd64
+pkg: github.com/prashantv/go-bench/sorted_vs_heap
+cpu: 13th Gen Intel(R) Core(TM) i5-13600KF
+BenchmarkSorted/1_shuffled_elems         	78202698	        16.18 ns/op	       8 B/op	       1 allocs/op
+BenchmarkSorted/1_sorted_elems           	74013729	        16.00 ns/op	       8 B/op	       1 allocs/op
+BenchmarkSorted/10_shuffled_elems        	 4999582	       241.4 ns/op	     160 B/op	       2 allocs/op
+BenchmarkSorted/10_sorted_elems          	 6413139	       187.6 ns/op	     160 B/op	       2 allocs/op
+BenchmarkSorted/100_shuffled_elems       	   57819	     20819 ns/op	    1536 B/op	       1 allocs/op
+BenchmarkSorted/100_sorted_elems         	  135454	      8888 ns/op	    1536 B/op	       1 allocs/op
+BenchmarkSorted/1000_shuffled_elems      	    1038	   1166869 ns/op	   17924 B/op	       3 allocs/op
+BenchmarkSorted/1000_sorted_elems        	    1886	    639461 ns/op	   17922 B/op	       3 allocs/op
+BenchmarkHeap/1_shuffled_elems           	97691158	        12.53 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/1_sorted_elems             	100000000	        12.23 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/10_shuffled_elems          	 6940164	       172.5 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/10_sorted_elems            	 7564102	       159.1 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/100_shuffled_elems         	  432127	      2798 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/100_sorted_elems           	  475987	      2528 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHeap/1000_shuffled_elems        	   14500	     83782 ns/op	   11905 B/op	    1488 allocs/op
+BenchmarkHeap/1000_sorted_elems          	   16956	     70644 ns/op	   11905 B/op	    1488 allocs/op
+PASS
+ok  	github.com/prashantv/go-bench/sorted_vs_heap	22.279s

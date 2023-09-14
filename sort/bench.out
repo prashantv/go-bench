@@ -1,0 +1,29 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/prashantv/go-bench/sort
+BenchmarkSortReverse/slices/size=1         	281369086	         4.216 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortReverse/sortIface/size=1      	36486592	        33.26 ns/op	      32 B/op	       1 allocs/op
+BenchmarkSortReverse/slices/size=10        	12616046	        95.06 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortReverse/sortIface/size=10     	 4790110	       249.1 ns/op	      32 B/op	       1 allocs/op
+BenchmarkSortReverse/slices/size=100       	 4285416	       279.3 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortReverse/sortIface/size=100    	 2742613	       437.1 ns/op	      32 B/op	       1 allocs/op
+BenchmarkSortReverse/slices/size=1000      	  486651	      2447 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortReverse/sortIface/size=1000   	  326660	      3619 ns/op	      32 B/op	       1 allocs/op
+BenchmarkSortRandom/slices/size=1          	241160948	         4.968 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortRandom/sortIface/size=1       	50213844	        24.09 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortRandom/slices/size=10         	15208659	        78.26 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortRandom/sortIface/size=10      	 7589322	       156.2 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortRandom/slices/size=100        	  892729	      1316 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortRandom/sortIface/size=100     	  635828	      1855 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortRandom/slices/size=1000       	   32025	     33980 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortRandom/sortIface/size=1000    	   28688	     40778 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortedList/slices/size=1          	321529766	         3.738 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortedList/sortIface/size=1       	51364822	        22.75 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortedList/slices/size=10         	65038738	        18.39 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortedList/sortIface/size=10      	24258392	        48.07 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortedList/slices/size=100        	 4916845	       243.9 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortedList/sortIface/size=100     	 4307540	       277.0 ns/op	      24 B/op	       1 allocs/op
+BenchmarkSortedList/slices/size=1000       	  544494	      2215 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSortedList/sortIface/size=1000    	  499792	      2276 ns/op	      24 B/op	       1 allocs/op
+PASS
+ok  	github.com/prashantv/go-bench/sort	32.797s

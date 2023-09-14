@@ -1,9 +1,11 @@
 package main
 
 import (
+	"cmp"
 	"container/heap"
 	"fmt"
 	"math/rand"
+	"slices"
 	"sort"
 	"testing"
 
@@ -26,6 +28,26 @@ func (ss *sortedSlice) PushV(v int) {
 }
 
 func (ss *sortedSlice) PopV() int {
+	v := (*ss)[0]
+	*ss = (*ss)[1:]
+	return v
+}
+
+type sortedSliceGen []int
+
+func newSortedSliceGen() *sortedSliceGen { return &sortedSliceGen{} }
+func (ss sortedSliceGen) Len() int       { return len(ss) }
+func (ss *sortedSliceGen) PushV(v int) {
+	if cap(*ss) == 0 {
+		*ss = make(sortedSliceGen, 0, 10)
+	}
+	*ss = append(*ss, v)
+	slices.SortFunc(*ss, func(a, b int) int {
+		return cmp.Compare(a, b)
+	})
+}
+
+func (ss *sortedSliceGen) PopV() int {
 	v := (*ss)[0]
 	*ss = (*ss)[1:]
 	return v
@@ -72,9 +94,18 @@ func BenchmarkSorted(b *testing.B) {
 	runBenchmarks[*sortedSlice](b, newSortedSlice)
 }
 
+func BenchmarkSortedGen(b *testing.B) {
+	runBenchmarks[*sortedSliceGen](b, newSortedSliceGen)
+}
+
 func TestSorted(t *testing.T) {
 	runTests[*sortedSlice](t, newSortedSlice)
 }
+
+func TestSortedGenerics(t *testing.T) {
+	runTests[*sortedSliceGen](t, newSortedSliceGen)
+}
+
 func BenchmarkHeap(b *testing.B) {
 	runBenchmarks[*heapSlice](b, newHeapSlice)
 }

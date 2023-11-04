@@ -36,10 +36,11 @@ func getRandString(r *rand.Rand) string {
 }
 
 func BenchmarkLookups(b *testing.B) {
-	strs := getRandStrings(100000)
+	strs := getRandStrings(1000000)
+	perms := rand.Perm(len(strs))
 
 	for _, n := range []int{
-		1000, 10000, 100000,
+		1000, 10000, 100000, 100000,
 	} {
 		m := make(map[string]int, n)
 		for i := 0; i < n; i++ {
@@ -47,13 +48,15 @@ func BenchmarkLookups(b *testing.B) {
 		}
 
 		b.Run(fmt.Sprint(n), func(b *testing.B) {
-			lookup(b, m, strs[:1000])
+			lookup(b, m, strs, perms)
 		})
 	}
 }
 
-func lookup(b *testing.B, m map[string]int, strs []string) {
+func lookup(b *testing.B, m map[string]int, allStrs []string, perms []int) {
 	for i := 0; i < b.N; i++ {
+		permIdx := i % (len(perms) - 1000)
+		strs := allStrs[permIdx : permIdx+1000]
 		for _, s := range strs {
 			v := m[s]
 			call(v)
